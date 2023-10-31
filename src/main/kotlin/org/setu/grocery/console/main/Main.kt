@@ -5,7 +5,7 @@ import org.setu.grocery.console.models.GroceryModel
 
 private val logger = KotlinLogging.logger {}
 var grocery = GroceryModel()
-
+val groceries = ArrayList<GroceryModel>()
 
 fun main(args: Array<String>){
     logger.info { "Launching Grocery Console App" }
@@ -71,6 +71,13 @@ fun addGrocery(){
     }
 
     println("You entered "+ grocery.groceryType +" for type")
+
+    if (grocery.title.isNotEmpty()) {
+        groceries.add(grocery.copy())
+        logger.info("Grocery Added : [ $grocery ]")
+    }
+    else
+        logger.info("Grocery Not Added")
 }
 
 fun updateGrocery() {
@@ -96,12 +103,20 @@ fun updateGrocery() {
 
 fun listGroceries() {
     println("You Chose List All Groceries")
+    println()
+    groceries.forEach { logger.info("${it}") }
 }
 
 fun listFruits(){
     println("You Chose List All Fruits")
+
+    println()
+    groceries.forEach { logger.info("${it}") }
 }
 
 fun listVegetables(){
     println("You Chose List All Vegetables")
+
+    println()
+    groceries.forEach { logger.info("${it}") }
 }
