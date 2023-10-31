@@ -1,8 +1,12 @@
 package org.setu.grocery.console.main
 
 import mu.KotlinLogging
+import org.setu.grocery.console.models.GroceryModel
 
 private val logger = KotlinLogging.logger {}
+var grocery = GroceryModel()
+
+
 fun main(args: Array<String>){
     logger.info { "Launching Grocery Console App" }
     println("Grocery Kotlin App Version 1.0")
@@ -48,11 +52,46 @@ fun menu() : Int {
 }
 
 fun addGrocery(){
-    println("You Chose Add Grocery")
+
+    println("Add Grocery")
+    println()
+    print("Enter a Title : ")
+    grocery.title = readln()!!
+    println("You entered "+ grocery.title +" for title")
+    print("Enter a Price : ")
+    grocery.price = readLine()?.toDoubleOrNull() ?: error("You need to enter a double")!!
+    println("You entered " + grocery.price + " for price")
+    print("Enter a type (1=fruit 2=vegetable) : ")
+    grocery.type = readLine()?.toIntOrNull() ?: error("You need to enter an int")!!
+    if (grocery.type==1){
+        grocery.groceryType = "Fruit"
+    }
+    else{
+        grocery.groceryType = "Vegetable"
+    }
+
+    println("You entered "+ grocery.groceryType +" for type")
 }
 
 fun updateGrocery() {
-    println("You Chose Update Grocery")
+    println("Update Grocery")
+    println("What do you want to update?")
+    grocery.title = readln()!!
+    print("Enter a new Title for [" + grocery.title + "] : ")
+    grocery.title = readln()!!
+    print("Enter a new price for [" + grocery.title + "] : ")
+    grocery.price = readLine()?.toDoubleOrNull() ?: error("You need to enter a double")!!
+    print("Enter a new type for [" + grocery.title + "] (1=fruit 2=vegetable) : ")
+    grocery.type = readLine()?.toIntOrNull() ?: error("You need to enter an int")!!
+    if (grocery.type==1){
+        grocery.groceryType = "Fruit"
+    }
+    else{
+        grocery.groceryType = "Vegetable"
+    }
+    println()
+    println("You've updated " + grocery.title + " with the price [ " +  grocery.price + " ] and type [ "+ grocery.groceryType +" ]")
+
 }
 
 fun listGroceries() {
