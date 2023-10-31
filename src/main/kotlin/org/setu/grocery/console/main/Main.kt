@@ -1,6 +1,8 @@
 package org.setu.grocery.console.main
 
 import mu.KotlinLogging
+import org.setu.grocery.console.controllers.GroceryController
+import org.setu.grocery.console.models.GroceryJSONStore
 import org.setu.grocery.console.models.GroceryModel
 import org.setu.grocery.console.models.GroceryMemStore
 import org.setu.grocery.console.views.GroceryView
@@ -8,29 +10,10 @@ import org.setu.grocery.console.views.GroceryView
 private val logger = KotlinLogging.logger {}
 
 val groceryView = GroceryView()
-val groceries = GroceryMemStore()
-
+val groceries = GroceryJSONStore()
+val controller = GroceryController()
 fun main(args: Array<String>){
-    logger.info { "Launching Grocery Console App" }
-    println("Grocery Kotlin App Version 1.0")
-
-    var input: Int
-
-    do {
-        input = groceryView.menu()
-        when(input) {
-            1 -> addGrocery()
-            2 -> updateGrocery()
-            3 -> groceryView.listGroceries(groceries)
-            //4 -> listFruits()
-            //5 -> listVegetables()
-            6 -> searchGrocery()
-            -1 -> println("Exiting App")
-            else -> println("Invalid Option")
-        }
-        println()
-    } while (input != -1)
-    logger.info { "Shutting Down Grocery Console App" }
+    GroceryController().start()
 }
 
 fun addGrocery(){

@@ -1,6 +1,6 @@
 package org.setu.grocery.console.views
 
-import org.setu.grocery.console.models.GroceryMemStore
+import org.setu.grocery.console.models.GroceryJSONStore
 import org.setu.grocery.console.models.GroceryModel
 class GroceryView {
     fun menu() : Int {
@@ -24,7 +24,7 @@ class GroceryView {
         return option
     }
 
-    fun listGroceries(groceries : GroceryMemStore) {
+    fun listGroceries(groceries: GroceryJSONStore) {
         println("List All Groceries")
         println()
         groceries.logAll()
