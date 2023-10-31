@@ -4,7 +4,6 @@ import mu.KotlinLogging
 import org.setu.grocery.console.models.GroceryModel
 
 private val logger = KotlinLogging.logger {}
-var grocery = GroceryModel()
 val groceries = ArrayList<GroceryModel>()
 
 fun main(args: Array<String>){
@@ -21,6 +20,7 @@ fun main(args: Array<String>){
             3 -> listGroceries()
             4 -> listFruits()
             5 -> listVegetables()
+            6 -> searchGrocery()
             -1 -> println("Exiting App")
             else -> println("Invalid Option")
         }
@@ -40,6 +40,7 @@ fun menu() : Int {
     println(" 3. List All Groceries")
     println(" 4. List All Fruits")
     println(" 5. List All Vegetables")
+    println(" 6. Search for Vegetable")
     println("-1. Exit")
     println()
     print("Enter an integer : ")
@@ -52,53 +53,64 @@ fun menu() : Int {
 }
 
 fun addGrocery(){
+    var aGrocery = GroceryModel()
 
     println("Add Grocery")
     println()
     print("Enter a Title : ")
-    grocery.title = readln()!!
-    println("You entered "+ grocery.title +" for title")
+    aGrocery.title = readln()!!
+    println("You entered "+ aGrocery.title +" for title")
     print("Enter a Price : ")
-    grocery.price = readLine()?.toDoubleOrNull() ?: error("You need to enter a double")!!
-    println("You entered " + grocery.price + " for price")
+    aGrocery.price = readLine()?.toDoubleOrNull() ?: error("You need to enter a double")!!
+    println("You entered " + aGrocery.price + " for price")
     print("Enter a type (1=fruit 2=vegetable) : ")
-    grocery.type = readLine()?.toIntOrNull() ?: error("You need to enter an int")!!
-    if (grocery.type==1){
-        grocery.groceryType = "Fruit"
+    aGrocery.type = readLine()?.toIntOrNull() ?: error("You need to enter an int")!!
+    if (aGrocery.type==1){
+        aGrocery.groceryType = "Fruit"
     }
     else{
-        grocery.groceryType = "Vegetable"
+        aGrocery.groceryType = "Vegetable"
     }
+    aGrocery.id++
+    println("You entered "+ aGrocery.groceryType +" for type")
 
-    println("You entered "+ grocery.groceryType +" for type")
-
-    if (grocery.title.isNotEmpty()) {
-        groceries.add(grocery.copy())
-        logger.info("Grocery Added : [ $grocery ]")
+    if (aGrocery.title.isNotEmpty()) {
+        aGrocery.id = groceries.size.toLong()
+        groceries.add(aGrocery.copy())
+        logger.info("Grocery Added : [ $aGrocery ]")
     }
     else
         logger.info("Grocery Not Added")
 }
 
 fun updateGrocery() {
-    println("Update Grocery")
-    println("What do you want to update?")
-    grocery.title = readln()!!
-    print("Enter a new Title for [" + grocery.title + "] : ")
-    grocery.title = readln()!!
-    print("Enter a new price for [" + grocery.title + "] : ")
-    grocery.price = readLine()?.toDoubleOrNull() ?: error("You need to enter a double")!!
-    print("Enter a new type for [" + grocery.title + "] (1=fruit 2=vegetable) : ")
-    grocery.type = readLine()?.toIntOrNull() ?: error("You need to enter an int")!!
-    if (grocery.type==1){
-        grocery.groceryType = "Fruit"
-    }
-    else{
-        grocery.groceryType = "Vegetable"
-    }
-    println()
-    println("You've updated " + grocery.title + " with the price [ " +  grocery.price + " ] and type [ "+ grocery.groceryType +" ]")
 
+    println("Update Grocery")
+    println()
+    listGroceries()
+    var searchId = getId()
+    val aGrocery = search(searchId)
+
+
+    if(aGrocery != null) {
+        println("What do you want to update?")
+        aGrocery.title = readln()!!
+        print("Enter a new Title for [" + aGrocery.title + "] : ")
+        aGrocery.title = readln()!!
+        print("Enter a new price for [" + aGrocery.title + "] : ")
+        aGrocery.price = readLine()?.toDoubleOrNull() ?: error("You need to enter a double")!!
+        print("Enter a new type for [" + aGrocery.title + "] (1=fruit 2=vegetable) : ")
+        aGrocery.type = readLine()?.toIntOrNull() ?: error("You need to enter an int")!!
+        if (aGrocery.type == 1) {
+            aGrocery.groceryType = "Fruit"
+        } else {
+            aGrocery.groceryType = "Vegetable"
+        }
+        println()
+        println("You've updated " + aGrocery.title + " with the price [ " + aGrocery.price + " ] and type [ " + aGrocery.groceryType + " ]")
+    }
+    else
+        println("Grocery not updated.")
 }
 
 fun listGroceries() {
@@ -119,4 +131,32 @@ fun listVegetables(){
 
     println()
     groceries.forEach { logger.info("${it}") }
+}
+
+fun getId() : Long {
+    var strId : String? // String to hold user input
+    var searchId : Long // Long to hold converted id
+    print("Enter id to Search/Update : ")
+    strId = readln()!!
+    searchId = if (strId.toLongOrNull() != null && !strId.isEmpty())
+        strId.toLong()
+    else
+        -9
+    return searchId
+}
+
+fun search(id: Long) : GroceryModel? {
+    var foundGrocery: GroceryModel? = groceries.find { p -> p.id == id }
+    return foundGrocery
+}
+
+fun searchGrocery() {
+
+    var searchId = getId()
+    val aGrocery = search(searchId)
+
+    if(aGrocery != null)
+        println("Grocery Details [ $aGrocery ]")
+    else
+        println("Grocery Not Found...")
 }
