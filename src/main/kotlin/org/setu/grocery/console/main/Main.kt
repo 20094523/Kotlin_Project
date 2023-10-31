@@ -91,23 +91,41 @@ fun updateGrocery() {
     var searchId = getId()
     val aGrocery = search(searchId)
 
+    var tempTitle : String?
+    var tempPrice : Double?
+    var tempType : Int?
+    var tempGroceryType : String?
 
     if(aGrocery != null) {
-        println("What do you want to update?")
-        aGrocery.title = readln()!!
         print("Enter a new Title for [" + aGrocery.title + "] : ")
-        aGrocery.title = readln()!!
+        tempTitle = readln()!!
         print("Enter a new price for [" + aGrocery.title + "] : ")
-        aGrocery.price = readLine()?.toDoubleOrNull() ?: error("You need to enter a double")!!
+        tempPrice = readLine()?.toDoubleOrNull() ?: error("You need to enter a double")!!
         print("Enter a new type for [" + aGrocery.title + "] (1=fruit 2=vegetable) : ")
-        aGrocery.type = readLine()?.toIntOrNull() ?: error("You need to enter an int")!!
+        tempType = readLine()?.toIntOrNull() ?: error("You need to enter an int")!!
         if (aGrocery.type == 1) {
-            aGrocery.groceryType = "Fruit"
+            tempGroceryType = "Fruit"
         } else {
-            aGrocery.groceryType = "Vegetable"
+            tempGroceryType = "Vegetable"
         }
         println()
-        println("You've updated " + aGrocery.title + " with the price [ " + aGrocery.price + " ] and type [ " + aGrocery.groceryType + " ]")
+        if (!tempTitle.isNullOrEmpty() && !tempPrice.isNaN() && !tempGroceryType.isNullOrEmpty()) {
+
+            aGrocery.title=tempTitle
+            aGrocery.price=tempPrice
+            aGrocery.type=tempType
+            aGrocery.groceryType=tempGroceryType
+
+
+            println(
+                        "You've updated " + aGrocery.title +
+                        " with the price [ " + aGrocery.price +
+                        " ] and type [ " + aGrocery.groceryType + " ]"
+            )
+            logger.info("Grocery Updated : [ $aGrocery ]")
+        }
+        else
+            logger.info("Grocery failed to update.")
     }
     else
         println("Grocery not updated.")
@@ -121,7 +139,6 @@ fun listGroceries() {
 
 fun listFruits(){
     println("You Chose List All Fruits")
-
     println()
     groceries.forEach { logger.info("${it}") }
 }
