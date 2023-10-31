@@ -13,6 +13,7 @@ class GroceryView {
         println(" 2. Update Grocery")
         println(" 3. List All Groceries")
         println(" 4. Search Grocery")
+        println(" 5. Delete Grocery")
         println("-1. Exit")
         println()
         print("Enter Option : ")

@@ -26,6 +26,7 @@ class GroceryController {
                 2 -> update()
                 3 -> list()
                 4 -> search()
+                5 -> delete()
                 -1 -> println("Exiting App")
                 else -> println("Invalid Option")
             }
@@ -66,6 +67,19 @@ class GroceryController {
         }
         else
             println("Grocery Not Updated...")
+    }
+    fun delete() {
+        groceryView.listGroceries(groceries)
+        var searchId = groceryView.getId()
+        val aGrocery = search(searchId)
+
+        if(aGrocery != null) {
+            groceries.delete(aGrocery)
+            println("Grocery Deleted...")
+            groceryView.listGroceries(groceries)
+        }
+        else
+            println("Grocery Not Deleted...")
     }
 
     fun search() {

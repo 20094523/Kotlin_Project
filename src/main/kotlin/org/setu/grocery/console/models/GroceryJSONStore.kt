@@ -52,6 +52,10 @@ class GroceryJSONStore: GroceryStore {
         }
         serialize()
     }
+    override fun delete(grocery: GroceryModel) {
+        groceries.remove(grocery)
+        serialize()
+    }
 
     internal fun logAll() {
         groceries.forEach { logger.info("${it}") }

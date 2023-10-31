@@ -37,6 +37,11 @@ class GroceryMemStore : GroceryStore {
         }
     }
 
+
+    override fun delete(grocery: GroceryModel) {
+        groceries.remove(grocery)
+    }
+
     internal fun logAll() {
         groceries.forEach { logger.info("${it}") }
     }
