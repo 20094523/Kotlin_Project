@@ -14,6 +14,8 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation("org.slf4j:slf4j-simple:1.6.1")
+    implementation("io.github.microutils:kotlin-logging:1.6.22")
 }
 
 tasks.test {
