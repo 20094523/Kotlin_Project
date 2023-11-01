@@ -4,10 +4,13 @@ import mu.KotlinLogging
 import org.setu.grocery.console.controllers.GroceryController
 import org.setu.grocery.console.models.GroceryJSONStore
 import org.setu.grocery.console.models.GroceryModel
-import org.setu.grocery.console.models.GroceryMemStore
 import org.setu.grocery.console.views.GroceryView
 
 private val logger = KotlinLogging.logger {}
+
+const val ANSI_RESET = "\u001B[0m"
+const val ANSI_RED = "\u001B[31m"
+const val ANSI_BLUE = "\u001B[34m"
 
 val groceryView = GroceryView()
 val groceries = GroceryJSONStore()

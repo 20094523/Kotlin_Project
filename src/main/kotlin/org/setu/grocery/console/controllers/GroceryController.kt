@@ -5,6 +5,10 @@ import org.setu.grocery.console.models.GroceryJSONStore
 
 import org.setu.grocery.console.models.GroceryModel
 import org.setu.grocery.console.views.GroceryView
+
+const val ANSI_RESET = "\u001B[0m"
+const val ANSI_RED = "\u001B[31m"
+const val ANSI_BLUE = "\u001B[34m"
 class GroceryController {
     val groceryView = GroceryView()
     //val groceries = GroceryMemStore()
@@ -13,7 +17,7 @@ class GroceryController {
 
     init {
         logger.info { "Launching Grocery Console App" }
-        println("Grocery Kotlin App Version 1.0")
+        println(ANSI_RED + "Grocery Kotlin App Version 1.0" + ANSI_RESET)
     }
 
     fun start() {
@@ -66,7 +70,7 @@ class GroceryController {
                 logger.info("Grocery Not Updated")
         }
         else
-            println("Grocery Not Updated...")
+            println(ANSI_RED+"Grocery Not Updated..."+ ANSI_RESET)
     }
     fun delete() {
         groceryView.listGroceries(groceries)
@@ -79,7 +83,7 @@ class GroceryController {
             groceryView.listGroceries(groceries)
         }
         else
-            println("Grocery Not Deleted...")
+            println(ANSI_RED+"Grocery Not Deleted..."+ ANSI_RESET)
     }
 
     fun search() {

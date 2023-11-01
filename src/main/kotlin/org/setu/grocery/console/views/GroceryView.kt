@@ -1,5 +1,8 @@
 package org.setu.grocery.console.views
 
+import org.setu.grocery.console.controllers.ANSI_RED
+import org.setu.grocery.console.controllers.ANSI_RESET
+import org.setu.grocery.console.main.ANSI_BLUE
 import org.setu.grocery.console.models.GroceryJSONStore
 import org.setu.grocery.console.models.GroceryModel
 class GroceryView {
@@ -8,13 +11,13 @@ class GroceryView {
         var option : Int
         var input: String?
 
-        println("MAIN MENU")
-        println(" 1. Add Grocery")
-        println(" 2. Update Grocery")
-        println(" 3. List All Groceries")
-        println(" 4. Search Grocery")
-        println(" 5. Delete Grocery")
-        println("-1. Exit")
+        println(ANSI_BLUE+"MAIN MENU"+ ANSI_RESET)
+        println(org.setu.grocery.console.controllers.ANSI_BLUE+" 1. Add Grocery"+ ANSI_RESET)
+        println(ANSI_BLUE+" 2. Update Grocery"+ ANSI_RESET)
+        println(ANSI_BLUE+" 3. List All Groceries"+ ANSI_RESET)
+        println(org.setu.grocery.console.controllers.ANSI_BLUE+" 4. Search Grocery"+ org.setu.grocery.console.main.ANSI_RESET)
+        println(org.setu.grocery.console.controllers.ANSI_BLUE+" 5. Delete Grocery"+ ANSI_RESET)
+        println(org.setu.grocery.console.controllers.ANSI_BLUE+"-1. Exit"+ ANSI_RESET)
         println()
         print("Enter Option : ")
         input = readln()!!
@@ -36,7 +39,7 @@ class GroceryView {
         if(grocery != null)
             println("Grocery Details [ $grocery ]")
         else
-            println("Grocery Not Found...")
+            println(ANSI_RED+"Grocery Not Found..."+ ANSI_RESET)
     }
 
     fun addGroceryData(grocery : GroceryModel) : Boolean {
